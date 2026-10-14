@@ -60,7 +60,7 @@ export default function Welcome({ auth }) {
                             What should I build in Minecraft?
                         </h1>
                         <p className="mt-6 text-xl text-stone-300">
-                            If you have a good idea make an account and send in your recommendation. I'll choose what to build!
+                            If you have a good idea make an account, and send in your recommendation. I'll choose what to build!
                         </p>
                         <div className="mt-8 flex gap-4">
                             <Link href="/register" className={`${btn} bg-green-500 text-black`}>Get started</Link>
@@ -122,7 +122,7 @@ export default function Welcome({ auth }) {
                         className="aspect-video w-full border-b-2 border-black object-cover transition-transform hover:scale-105" />
                         <p className="p-4 font-bold">Windmill and Farm</p>
                         <div className='mb-4'>
-                            <span className="border-2 border-black bg-orange-500 px-3 py-1 text-sm font-bold text-black">Medium</span>
+                            <span className="border-2 border-black bg-amber-400 px-3 py-1 text-sm font-bold text-black">Medium</span>
                         </div>
                      </div>
                      
@@ -132,7 +132,7 @@ export default function Welcome({ auth }) {
                         className="aspect-video w-full border-b-2 border-black object-cover transition-transform hover:scale-105" />
                         <p className="p-4 font-bold">Twin/Connected House</p>
                         <div className='mb-4'>
-                            <span className="border-2 border-black bg-orange-500 px-3 py-1 text-sm font-bold text-black">Medium</span>
+                            <span className="border-2 border-black bg-amber-400 px-3 py-1 text-sm font-bold text-black">Medium</span>
                         </div>
                      </div>
 
@@ -166,7 +166,7 @@ export default function Welcome({ auth }) {
                                     <span className={`${levelColors[build.difficulty]} border-2 border-black px-3 py-1 text-sm font-bold text-black`}>{build.difficulty}</span>
                                 </div>
 
-                                <p className="mt-4 text-sm text-stone-400">by {build.user?.name}</p>
+                                <p className="mt-4 text-lg text-white"><span className='text-sm text-stone-400'>by</span> {build.user?.name}</p>
                             </div>
                         ))}
                     </div>
