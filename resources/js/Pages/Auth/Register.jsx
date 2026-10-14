@@ -1,11 +1,8 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react'
+import React from 'react'
 
 export default function Register() {
+   
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -15,106 +12,61 @@ export default function Register() {
 
     const submit = (e) => {
         e.preventDefault();
-
-        post(route('register'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
+        post('/register', { onFinish: () => reset('password', 'password_confirmation') });
     };
 
+
+    const card = 'border-2 border-black bg-stone-800 shadow-[4px_4px_0_#000]';
+    const field = 'mt-1 w-full border-2 border-black bg-stone-900 p-2 text-white';
+    const btn = 'border-2 border-black px-4 py-3 font-bold text-black shadow-[4px_4px_0_#000] transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none';
+    const pixel = { fontFamily: "'Press Start 2P', monospace" };
+
     return (
-        <GuestLayout>
-            <Head title="Register" />
+        <>
+            <Head title="Sign up">
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+            </Head>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+            <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-green-700 via-amber-950 to-orange-900 px-6 py-12 font-mono text-lg text-white">
+                <Link href="/" className="mb-8 text-xl" style={pixel}>WhattoBuild</Link>
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
+                <form onSubmit={submit} className={`${card} w-full max-w-md space-y-5 p-8`}>
+                    <h1 className="text-sm" style={pixel}>Sign up</h1>
 
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
+                    <label className="block">Name
+                        <input type="text" value={data.name} onChange={(e) => setData('name', e.target.value)}
+                            className={field} autoFocus required />
+                        {errors.name && <span className="block text-sm text-red-400">{errors.name}</span>}
+                    </label>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                    <label className="block">Email
+                        <input type="email" value={data.email} onChange={(e) => setData('email', e.target.value)}
+                            className={field} required />
+                        {errors.email && <span className="block text-sm text-red-400">{errors.email}</span>}
+                    </label>
 
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
+                    <label className="block">Password
+                        <input type="password" value={data.password} onChange={(e) => setData('password', e.target.value)}
+                            className={field} required />
+                        {errors.password && <span className="block text-sm text-red-400">{errors.password}</span>}
+                    </label>
 
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
+                    <label className="block">Confirm password
+                        <input type="password" value={data.password_confirmation} onChange={(e) => setData('password_confirmation', e.target.value)}
+                            className={field} required />
+                        {errors.password_confirmation && <span className="block text-sm text-red-400">{errors.password_confirmation}</span>}
+                    </label>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <button type="submit" disabled={processing} className={`${btn} w-full bg-green-500`}>Create account</button>
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
+                    <p className="text-center text-base text-stone-300">
+                        Already have an account? <Link href="/login" className="text-green-400 underline">Log in</Link>
+                    </p>
+                </form>
 
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
-                        required
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
-    );
+                <Link href="/" className="mt-6 text-sm hover:text-green-400">&larr; Back to home</Link>
+            </div>
+        </>
+    )
 }
